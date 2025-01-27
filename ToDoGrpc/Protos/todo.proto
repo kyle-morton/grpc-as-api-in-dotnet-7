@@ -9,10 +9,21 @@ package todoit;
 service ToDoIt {
 
     // Create
-    rpc CreateToDo(CreateToDoRequest) returns (CreateToDoResponse) {} 
+    rpc CreateToDo(CreateToDoRequest) returns (CreateToDoResponse) {
+        
+        // Adding this allows REST http requests to hit this same service
+        option (google.api.http) = { 
+            post: "/v1/todo",
+            body: "*"
+        }; 
+    } 
 
     // Read Single
-    rpc ReadToDo(ReadToDoRequest) returns (ReadToDoResponse) {}
+    rpc ReadToDo(ReadToDoRequest) returns (ReadToDoResponse) {
+        option(google.api.http) = {
+            get: "/v1/todo/{id}"
+        };
+    }
 
     // Read List
     rpc ListToDo(GetAllRequest) returns (GetAllResponse) {
@@ -22,10 +33,19 @@ service ToDoIt {
     }
 
     // Update
-    rpc UpdateToDo (UpdateToDoRequest) returns (UpdateToDoResponse) {}
+    rpc UpdateToDo (UpdateToDoRequest) returns (UpdateToDoResponse) {
+        option (google.api.http) = { 
+            put: "/v1/todo/{id}",
+            body: "*"
+        }; 
+    }
 
     // Delete
-    rpc DeleteToDo (DeleteToDoRequest) returns (DeleteToDoResponse) {}
+    rpc DeleteToDo (DeleteToDoRequest) returns (DeleteToDoResponse) {
+        option(google.api.http) = {
+            delete: "/v1/todo/{id}"
+        };
+    }
 
 }
 
